@@ -142,8 +142,32 @@ https://你的项目名.你的子域.workers.dev/admin
 
 ```bash
 # 粘贴从管理后台复制的命令，类似：
-curl -sL https://你的项目.你的子域.workers.dev/install.sh | bash -s install <SERVER_ID> <SECRET> <WORKER_URL>
+curl -sL https://你的项目.你的子域.workers.dev/install.sh | bash -s install <SERVER_ID> <SECRET> <WORKER_URL> [INTERVAL]
 ```
+
+**参数说明：**
+
+| 参数 | 说明 | 默认值 |
+|------|------|--------|
+| `SERVER_ID` | 服务器唯一标识符（必填） | - |
+| `SECRET` | API 认证密钥（必填） | - |
+| `WORKER_URL` | Worker 上报地址（必填） | - |
+| `INTERVAL` | 数据上报间隔（秒） | `60` |
+
+**示例：**
+
+```bash
+# 默认60秒上报间隔
+curl -sL https://example.workers.dev/install.sh | bash -s install abc123 secret https://example.workers.dev/update
+
+# 30秒上报间隔（更实时）
+curl -sL https://example.workers.dev/install.sh | bash -s install abc123 secret https://example.workers.dev/update 30
+
+# 120秒上报间隔（节省资源）
+curl -sL https://example.workers.dev/install.sh | bash -s install abc123 secret https://example.workers.dev/update 120
+```
+
+> **注意**：上报间隔越短，数据越实时，但会增加 API 调用和数据库存储。建议根据服务器数量和网络状况选择合适的间隔。
 
 支持的系统：Ubuntu / Debian / CentOS / RHEL / Fedora / Rocky / AlmaLinux
 
@@ -159,8 +183,8 @@ curl -sL https://你的项目.你的子域.workers.dev/install.sh | bash -s unin
 
 访问 `https://你的项目.你的子域.workers.dev/` 查看：
 
-- **卡片视图**：服务器状态概览
-- **表格视图**：详细数据列表
+- **卡片视图**：服务器状态概览（含实时网速和本月流量）
+- **表格视图**：详细数据列表（含本月累计流量）
 - **地图视图**：全球服务器分布
 - **过滤器**：按国家筛选服务器
 
